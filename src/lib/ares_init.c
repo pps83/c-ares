@@ -203,6 +203,11 @@ static ares_status_t init_by_defaults(ares_channel_t *channel)
     /* POSIX leaves it unspecified whether gethostname() NUL terminates when the
      * host name doesn't fit, so force the last byte to a terminator afterwards.
      */
+#ifdef _WIN32
+    DWORD sz = (DWORD)len;
+    if (!GetComputerNameExA(ComputerNameDnsHostname, hostname, &sz))
+#endif
+
     if (gethostname(hostname, (GETHOSTNAME_TYPE_ARG2)len) != 0) {
       /* Lets not treat a gethostname failure as critical, since we
        * are ok if gethostname doesn't even exist */
