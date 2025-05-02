@@ -186,6 +186,11 @@ static ares_status_t init_by_defaults(ares_channel_t *channel)
       goto error;       /* LCOV_EXCL_LINE: OutOfMemory */
     }
 
+#ifdef _WIN32
+    DWORD sz = (DWORD)len;
+    if (!GetComputerNameExA(ComputerNameDnsHostname, hostname, &sz))
+#endif
+
     if (gethostname(hostname, (GETHOSTNAME_TYPE_ARG2)len) != 0) {
       /* Lets not treat a gethostname failure as critical, since we
        * are ok if gethostname doesn't even exist */
