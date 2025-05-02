@@ -56,7 +56,7 @@ CHANGES.dist
 c-ares-*.tar.gz.asc
 ares_parse_mx_reply.pdf
 /[0-9]*.patch
-build
+build*/
 bin/
 CMakeFiles/
 CMakeCache.txt
